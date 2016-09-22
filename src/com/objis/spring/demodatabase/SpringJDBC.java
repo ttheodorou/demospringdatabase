@@ -8,10 +8,25 @@ import java.sql.SQLException;
 import javax.sql.DataSource;
 
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.jdbc.core.JdbcTemplate;
 
 import domaine.Employe;
 
 public class SpringJDBC {
+
+	public static void saveEmployeJdbcTemplate(Employe employe) {
+
+		final String EMPLOYE_INSERT = "insert into employe (id,login, password, prenom, nom, email, role) "
+				+ "values (?,?,?,?,?,?,?)";
+		/* Chargement conteneur Spring et récupération bean SataSource */
+		ClassPathXmlApplicationContext appContext = new ClassPathXmlApplicationContext("spring-data.xml");
+		JdbcTemplate jdbcTemplate = (JdbcTemplate) appContext.getBean("jdbcTemplate");
+
+		jdbcTemplate.update(EMPLOYE_INSERT, new Object[] { employe.getId(), employe.getLogin(), employe.getPassword(),
+				employe.getPrenom(), employe.getNom(), employe.getEmail(), employe.getRole() });
+
+	}
+
 	public void saveEmploye(Employe employe, String beanDataSource) {
 		Connection conn = null;
 		PreparedStatement stmt = null;

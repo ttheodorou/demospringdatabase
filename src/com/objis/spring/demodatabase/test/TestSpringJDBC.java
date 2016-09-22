@@ -8,6 +8,7 @@ import junit.framework.TestCase;
 public class TestSpringJDBC extends TestCase {
 
 private Employe emp ;
+private Employe employe;
 private String beanDataSource;
 private SpringJDBC springjdbc ;
 
@@ -15,6 +16,7 @@ private SpringJDBC springjdbc ;
 	protected void setUp() throws Exception {
 		super.setUp();
 		emp = new Employe(4,"morad","mdpobjis","Morad","HANAFI","morad.hanafi@objis.com","employe");
+		employe = new Employe(5,"clement","mdpobjis","Clement","Castro","clement.castro@objis.com","employe");
 		beanDataSource = "datasource2";
         springjdbc = new SpringJDBC();
 	}
@@ -27,6 +29,10 @@ private SpringJDBC springjdbc ;
 
 	public  void testSaveEmploye(){
 		springjdbc.saveEmploye(emp, beanDataSource);
+	}
+	
+	public  void testSaveEmployeJdbcTemplate(){
+		springjdbc.saveEmployeJdbcTemplate(employe);
 	}
 	
 	public void testGetEmployeById(){
